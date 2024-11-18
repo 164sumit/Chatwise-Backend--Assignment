@@ -31,6 +31,6 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     console.error(err.stack);
     res.status(500).send('Something went wrong!');
   });
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log('Server started on port 3001');
 });
