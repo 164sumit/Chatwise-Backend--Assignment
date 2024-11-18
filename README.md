@@ -1,7 +1,12 @@
 # Chatwise Backend & Frontend Assignment
 ## Deployment Link
+###Frontend Link
 ```bash
 https://chatwise-backend-assignment-gamma.vercel.app/
+```
+###Backend Link(it may be take 2-5min for restart the server if server is not active)
+```bash
+https://chatwise-backend-assignment.onrender.com
 ```
 
 ## Project Setup
