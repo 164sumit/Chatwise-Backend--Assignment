@@ -1,39 +1,52 @@
-"use client"
-import { useState } from 'react';
-import { NextPage } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
-import { LoginUser } from '@/actions/user.action';
-import { useRouter } from 'next/navigation';
 
-const LoginPage: NextPage = () => {
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BackendUrl } from '../lib';
+import { useAuth } from '../context/AuthContext';
+
+
+
+const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const Router=useRouter();
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Call API to login user
-    const response =await LoginUser({email,password});
-    if(response.message ==='Logged in successfully'){
-        alert(response.message);
-        // Redirect to dashboard page
-        localStorage.setItem('token',response.token);
-        Router.push('/posts');
+    const response = await fetch(`${BackendUrl}/api/v1/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+    if(response.ok){
+      const data = await response.json();
+      console.log(data);
+      
+      localStorage.setItem('token',data.token );
+      login(data.user);
+      navigate('/posts');
 
     }
     else{
-        alert(response.message);
+      alert('Invalid credentials');
     }
-    console.log(response);
+    
+    
     
   };
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
-      <Head>
+      <head>
         <title>Login</title>
-      </Head>
+      </head>
       <div className="max-w-md p-4 rounded-lg shadow-md bg-white md:px-8 lg:px-12 xl:px-16">
         <h1 className="text-3xl font-bold text-gray-700 mb-4">Login</h1>
         <form onSubmit={handleSubmit} className="mt-4">
@@ -76,7 +89,7 @@ const LoginPage: NextPage = () => {
         </form>
         <p className="text-sm text-gray-600 mt-4">
           Don't have an account?{' '}
-          <Link href="/signup" className="text-blue-500 hover:text-blue-700">
+          <Link to="/signup" className="text-blue-500 hover:text-blue-700">
             Sign Up
           </Link>
         </p>

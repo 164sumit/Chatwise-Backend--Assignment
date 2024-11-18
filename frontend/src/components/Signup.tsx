@@ -1,44 +1,75 @@
-"use client"
+import axios from 'axios';
 import { useState } from 'react';
-import { NextPage } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
-import { RegisterUser } from '@/actions/user.action';
+import { Link, useNavigate } from 'react-router-dom';
+import { BackendUrl } from '../lib';
 
-const SignUpPage: NextPage = () => {
+
+const SignUpPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigation=useNavigate();
 
   const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Call API to sign up user
-    if(confirmPassword!==password){
-        alert('Passwords do not match');
-        return;
-    } 
-    try {
-        
-        const user=await RegisterUser({ username, password,email, });
-        if(user){
-            alert('User registered successfully');
-            // window.location.href = '/';
-        }
-        console.log(user);
-    } catch (error) {
-        alert(error)
-        console.log(error);
-        
+    const response=await fetch(`${BackendUrl}/api/v1/user/register`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        email,
+      }),
+    })
+    // console.log(await response.json());
+    // console.log(response);
+    const data=await response.json();
+    if(response.status===201){
+      alert("User registered successfully");
+      navigation("/login");
     }
+    else if(response.status===500){
+      alert(data.message)
+    }
+    else{
+      alert("Somting went wrong on registration");
+    }
+    
+    
+    // const {data} =await axios.post(`${BackendUrl}/api/v1/user/register`,{
+    //   username,
+    //   password,
+    //   email,
+    // });
+    // console.log(data)
+    // if(response.status===201){
+    //   alert("User registered successfully");
+    //   navigation("/login");
+    // }
+    // else if(response.status===500){
+    //   alert(response.data.message);
+    // }
+    
+    // alert(response.data.message);
+    // if(response.statusText==="Created"){
+    //   navigation("/login");
+      
+    // }
+    // else{
+    //   alert("Failed to register user");
+    // }
    
   };
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
-      <Head>
+      <head>
         <title>Sign Up</title>
-      </Head>
+      </head>
       <div className="max-w-md p-4 rounded-lg shadow-md bg-white md:px-8 lg:px-12 xl:px-16">
         <h1 className="text-3xl font-bold text-gray-700 mb-4">Sign Up</h1>
         <form onSubmit={handleSubmit} className="mt-4">
@@ -111,7 +142,7 @@ const SignUpPage: NextPage = () => {
         </form>
         <p className="text-sm text-gray-600 mt-4">
           Already have an account?{' '}
-          <Link href="/login" className="text-blue-500 hover:text-blue-700">
+          <Link to="/login" className="text-blue-500 hover:text-blue-700">
             Login
           </Link>
         </p>
