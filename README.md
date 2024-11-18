@@ -1,4 +1,8 @@
 # Chatwise Backend & Frontend Assignment
+# Deployment Link
+```bash
+https://chatwise-backend-assignment-gamma.vercel.app/
+```
 
 ## Project Setup
 
