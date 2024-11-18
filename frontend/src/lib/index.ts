@@ -1,1 +1,1 @@
-export const BackendUrl="http://localhost:3001"
+export const BackendUrl="https://chatwise-backend-assignment.onrender.com"

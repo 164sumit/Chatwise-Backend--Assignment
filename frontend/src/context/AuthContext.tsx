@@ -2,7 +2,7 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { BackendUrl } from '../lib';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   isAuthenticated: boolean;

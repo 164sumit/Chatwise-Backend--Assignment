@@ -10,7 +10,7 @@ const NewPost: React.FC = () => {
   const [postText, setPostText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigation=useNavigate()
+  // const navigation=useNavigate()
 
   // Handle post submission
   const handleSubmit = async (e: React.FormEvent) => {
