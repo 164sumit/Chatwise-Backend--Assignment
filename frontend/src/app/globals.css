@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.max-w-md {
+  max-width: 550px;
+}
+
+.md\:px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.lg\:px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.xl\:px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.md\:py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.lg\:py-4 {
+  padding-top: 1rem;
+}
